@@ -1,0 +1,479 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
+
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  --font-arabic: "Amiri Quran", "Amiri", "Traditional Arabic", serif;
+}
+
+/* Indopak Nastaleeq font */
+@font-face {
+  font-family: "Indopak Nastaleeq";
+  src: url("/fonts/indopak-nastaleeq.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+.dark {
+  --background: #020617;
+  --foreground: #f1f5f9;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition-property: background-color, color, border-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Arabic text rendering (Uthmani) */
+.arabic-text {
+  font-family: "Amiri Quran", "Amiri", "Traditional Arabic", serif;
+  direction: rtl;
+  text-align: right;
+  line-height: 2.2;
+  overflow-wrap: break-word;
+  word-break: normal;
+  word-spacing: normal;
+  letter-spacing: normal;
+}
+
+/* Indopak Nastaleeq text rendering */
+.indopak-text {
+  font-family: "Indopak Nastaleeq", "Traditional Arabic", serif;
+  direction: rtl;
+  text-align: right;
+  line-height: 2.8;
+  overflow-wrap: break-word;
+  word-break: normal;
+  word-spacing: normal;
+}
+
+/* Overflow-wrap utility for long text at large zoom */
+.overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Verse highlight animation */
+@keyframes verseHighlight {
+  0% {
+    background-color: rgba(16, 185, 129, 0.15);
+  }
+  100% {
+    background-color: rgba(16, 185, 129, 0.05);
+  }
+}
+
+.verse-playing {
+  animation: verseHighlight 1.5s ease-in-out infinite alternate;
+  border-left: 3px solid #059669;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+/* Stagger children */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+.stagger-children > *:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.stagger-children > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.stagger-children > *:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.stagger-children > *:nth-child(4) {
+  animation-delay: 0.2s;
+}
+.stagger-children > *:nth-child(5) {
+  animation-delay: 0.25s;
+}
+.stagger-children > *:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+/* Audio player progress bar */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #059669;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Bottom navigation safe area for mobile */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+/* ─── Mushaf Page View ─────────────────────────────────────────────────────── */
+
+.mushaf-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mushaf-page {
+  max-width: 680px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  background-image: none;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.dark .mushaf-page {
+  background-image: none;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Outer ornamental border */
+.mushaf-border-outer {
+  border: 2px solid #a7f3d0; /* emerald-200 */
+  border-radius: 4px;
+}
+.dark .mushaf-border-outer {
+  border-color: #065f46; /* emerald-800 */
+}
+
+/* Inner ornamental border */
+.mushaf-border-inner {
+  border: 1px solid rgba(167, 243, 208, 0.5); /* emerald-200/50 */
+  border-radius: 3px;
+}
+.dark .mushaf-border-inner {
+  border-color: rgba(6, 95, 70, 0.4); /* emerald-800/40 */
+}
+
+/* Corner ornaments */
+.mushaf-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 5;
+  pointer-events: none;
+}
+.mushaf-corner::before,
+.mushaf-corner::after {
+  content: "";
+  position: absolute;
+  background: rgba(16, 185, 129, 0.4);
+}
+.dark .mushaf-corner::before,
+.dark .mushaf-corner::after {
+  background: rgba(16, 185, 129, 0.25);
+}
+.mushaf-corner::before {
+  width: 12px;
+  height: 1.5px;
+}
+.mushaf-corner::after {
+  width: 1.5px;
+  height: 12px;
+}
+
+.mushaf-corner-tl {
+  top: 10px;
+  left: 10px;
+}
+.mushaf-corner-tl::before {
+  top: 0;
+  left: 0;
+}
+.mushaf-corner-tl::after {
+  top: 0;
+  left: 0;
+}
+
+.mushaf-corner-tr {
+  top: 10px;
+  right: 10px;
+}
+.mushaf-corner-tr::before {
+  top: 0;
+  right: 0;
+}
+.mushaf-corner-tr::after {
+  top: 0;
+  right: 0;
+}
+
+.mushaf-corner-bl {
+  bottom: 10px;
+  left: 10px;
+}
+.mushaf-corner-bl::before {
+  bottom: 0;
+  left: 0;
+}
+.mushaf-corner-bl::after {
+  bottom: 0;
+  left: 0;
+}
+
+.mushaf-corner-br {
+  bottom: 10px;
+  right: 10px;
+}
+.mushaf-corner-br::before {
+  bottom: 0;
+  right: 0;
+}
+.mushaf-corner-br::after {
+  bottom: 0;
+  right: 0;
+}
+
+/* Mushaf text: justified Arabic flowing naturally */
+.mushaf-text {
+  text-justify: inter-word;
+  -webkit-hyphens: none;
+  hyphens: none;
+  word-spacing: 0.08em;
+  letter-spacing: 0.01em;
+}
+
+/* Ayah number marker — circled like a real Quran */
+.ayah-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.8em;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.05);
+  color: #065f46;
+  font-family: "Geist", Arial, sans-serif;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 0.15em;
+  position: relative;
+  top: -0.05em;
+  user-select: none;
+  direction: ltr;
+}
+.dark .ayah-marker {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.08);
+  color: #6ee7b7;
+}
+
+/* Navigation buttons */
+.mushaf-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: #ffffff;
+  color: #64748b;
+  transition: all 0.2s;
+}
+.mushaf-nav-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #059669;
+}
+.mushaf-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.dark .mushaf-nav-btn {
+  border-color: rgba(100, 116, 139, 0.3);
+  background: rgba(30, 41, 59, 0.6);
+  color: #94a3b8;
+}
+.dark .mushaf-nav-btn:hover:not(:disabled) {
+  background: rgba(30, 41, 59, 0.9);
+  color: #34d399;
+}
+
+/* Responsive: tighter padding on small screens */
+@media (max-width: 640px) {
+  .mushaf-page {
+    border-radius: 2px;
+  }
+  .mushaf-corner {
+    width: 14px;
+    height: 14px;
+  }
+  .mushaf-corner::before {
+    width: 8px;
+  }
+  .mushaf-corner::after {
+    height: 8px;
+  }
+  .mushaf-corner-tl {
+    top: 6px;
+    left: 6px;
+  }
+  .mushaf-corner-tr {
+    top: 6px;
+    right: 6px;
+  }
+  .mushaf-corner-bl {
+    bottom: 6px;
+    left: 6px;
+  }
+  .mushaf-corner-br {
+    bottom: 6px;
+    right: 6px;
+  }
+  .mushaf-border-outer {
+    border-width: 1.5px;
+  }
+}
+
+/* Extra-small breakpoint for toolbar labels */
+@media (min-width: 475px) {
+  .xs\:inline {
+    display: inline !important;
+  }
+}
+
+/* ─── Dua Card Styling ─────────────────────────────────────────────────────── */
+.dua-arabic {
+  font-family: "Amiri Quran", "Amiri", "Traditional Arabic", serif;
+  direction: rtl;
+  text-align: right;
+  line-height: 2;
+  overflow-wrap: break-word;
+  word-break: normal;
+  word-spacing: normal;
+  letter-spacing: normal;
+}
+
+.dua-section-header {
+  background-attachment: fixed;
+}
